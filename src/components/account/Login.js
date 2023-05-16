@@ -6,6 +6,7 @@ import { DataContext } from '../../context/DataProvider.js';
 import { useNavigate } from 'react-router-dom';
 import {CircularProgress} from '@mui/material';
 import Typed from 'react-typed';
+import TechBox from '../../TechBox/TechBox';
 
 const Background = styled(Box)`
     position: absolute;
@@ -13,7 +14,7 @@ const Background = styled(Box)`
     left: 0;
     right: 0;
     bottom: 0;
-    background:  rgb(255,245,238);
+    background: black;
     width: 100%;
     height: 100%;
 `
@@ -29,6 +30,7 @@ box-shadow: 4px 2px 4px 2px rgb(0 0 0/0.6);
 margin-top: 64px;
 flex-basis: 400px;
 background: white;
+border-radius: 20px;
 `;
 
 const Wrap = styled(Box)`
@@ -94,7 +96,8 @@ const WelcomeText = styled(Box)`
 `
 
 const WelcomeMessage = styled(Typography)`
-    font-size: 24px;
+    font-size: 20px;
+    color: white;
     font-weight: bold;
 `
 
@@ -206,6 +209,10 @@ const Login = ({authenticate}) => {
     return (
         <Background>
         <Wrap>
+            <Box style={{display: 'flex', flexDirection: 'column', position: 'absolute', top: '4vh', left: '18vh'}}>
+            <TechBox front='React js' back='Angular JS' left='Vue JS' right='Three JS' top='Jquery' bottom='D3.js'/>
+            <TechBox front='App dev' back='Web dev' left='Big data' right='Blockchain' top='AI/ML' bottom='Desktop app'/>
+            </Box>
         <StyledBox>
             <Box style={{flexBasis: 400}}>
                 <Image src={imageURL} alt='Login' width="200" height="200" />
@@ -242,9 +249,13 @@ const Login = ({authenticate}) => {
                         <CircularProgress style={{margin: "auto"}}/>
                 </ProgressBarContainer>
             }
+             <Box style={{display: 'flex', flexDirection: 'column', position: 'absolute', top: '4vh', right: '18vh'}}>
+            <TechBox front='Java' back='Python' left='C++' right='Javascript' top='Solidity' bottom='Golang'/>
+            <TechBox front='Django' back='Node js' left='Spring-Boot' right='Laravel' top='Nest JS' bottom='ASP.NET'/>
+            </Box>
         </Wrap>
         <WelcomeText>
-           <WelcomeMessage>Hello Geek, Welcome to the community ! Find the best thoughts on latest technologies here.</WelcomeMessage>   
+           <WelcomeMessage>Hello Geek, Welcome to the community ! Find the best thoughts on the latest technologies here.</WelcomeMessage>   
         </WelcomeText>
         </Background>
     )
