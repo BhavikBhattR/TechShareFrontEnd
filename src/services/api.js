@@ -2,7 +2,7 @@ import axios from 'axios';
 import { API_NOTIFICATION_MESSAGES, SERVICE_URLS } from '../constants/config.js';
 import { getAccessToken, getType  } from '../utils/common-utils.js';
 
-const URL = 'http://localhost:8000'
+const URL = 'https://techsharewebbackend.onrender.com'
 
 const axiosInstance = axios.create({
     baseURL: URL,
