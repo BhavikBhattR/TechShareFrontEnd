@@ -89,7 +89,7 @@ const Error = styled(Typography)`
 const WelcomeText = styled(Box)`
     position: fixed;
     width: 100%;
-    bottom: 10%;
+    bottom: 5%;
     text-align: center;
 `
 
