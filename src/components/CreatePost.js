@@ -1,7 +1,7 @@
 import { Box, FormControl, TextField, TextareaAutosize, CircularProgress } from "@mui/material";
 import { categories } from "../constants/data";
 import styled from "@emotion/styled";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { API } from "../services/api";
 import { Buffer } from "buffer";
@@ -138,6 +138,34 @@ function CreatePost(){
 
     const [loading, setLoading] = useState(false);
 
+    const [finalPost, setFinalPost] = useState(intialPost)
+
+    const initialRender = useRef(true);
+
+    let firstUpdateOfFinalPost = true;
+
+    // useEffect(()=>{
+    //     const update = async() =>{
+    //         finishUpdatePost()
+    //      }
+    //     if (initialRender.current) {
+    //         initialRender.current = false;
+    //       } else {
+    //         update();
+    //       }
+    // }, [post])
+
+    useEffect(()=>{
+       const postBlog = async() =>{
+            finishUploadPost();
+       }
+       if(initialRender.current){
+            initialRender.current = false;
+       }else{
+            postBlog();
+       }
+    }, [finalPost])
+
     useEffect(()=>{
         intialPost = {
             ...intialPost,
@@ -241,12 +269,12 @@ function CreatePost(){
       const finishUploadPost = async() =>{
 
         const formData = new FormData();
-        formData.append("title", post.title);
-        formData.append("description", post.description);
-        formData.append("images", post.images);
-        formData.append("userName", post.userName);
-        formData.append("attachedFields", post.attachedFields);
-        formData.append("createdDate", post.createdDate);
+        formData.append("title", finalPost.title);
+        formData.append("description", finalPost.description);
+        formData.append("images", finalPost.images);
+        formData.append("userName", finalPost.userName);
+        formData.append("attachedFields", finalPost.attachedFields);
+        formData.append("createdDate", finalPost.createdDate);
 
            const response = await API.createPost(formData);
 
@@ -290,12 +318,11 @@ function CreatePost(){
                     ['userName']: account.userName
                 }
            }
-           console.log('after my condn...', post)
-           setPost({
+           console.log('after my condn...', intialPost)
+           
+           setFinalPost({
             ...intialPost
            })
-
-           finishUploadPost();
 
         }else{
             intialPost = {
@@ -311,34 +338,9 @@ function CreatePost(){
                 }
            }
                console.log(intialPost)
-               setPost(intialPost)
-
-        const formData = new FormData();
-        formData.append("title", post.title);
-        formData.append("description", post.description);
-        formData.append("images", post.images);
-        formData.append("userName", post.userName);
-        formData.append("attachedFields", post.attachedFields);
-        formData.append("createdDate", post.createdDate);
-
-           const response = await API.createPost(formData);
-
-           if(response.isSuccess){
-            intialPost = {
-                ...intialPost,
-                ['title']: '',
-                ['description']: '',
-                ['images']: [],
-                ['attachedFields']: [],
-                ['createdDate']: null
-           }
-           setPost(intialPost);
-           console.log('after success', intialPost)
-                navigate('/');
-           }else{
-            setLoading(false)
-           }
-           console.log(post)
+               setFinalPost({
+                ...intialPost
+               })
         }
 
         // title: '',
